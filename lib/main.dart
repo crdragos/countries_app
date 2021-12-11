@@ -1,10 +1,18 @@
 import 'package:countries_app/src/helpers/app_routes.dart';
 import 'package:countries_app/src/pages/add_country/view.dart';
 import 'package:countries_app/src/pages/home/view.dart';
+import 'package:countries_app/src/services/cached_countries_service.dart';
+import 'package:countries_app/src/services/countries_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 
 void main() {
+  final Client client = Client();
+
+  Get.put(CountriesService(client: client));
+  Get.put(CachedCountriesService());
+
   runApp(const CountriesApp());
 }
 

@@ -1,4 +1,8 @@
+import 'package:countries_app/src/helpers/app_routes.dart';
 import 'package:countries_app/src/pages/home/state.dart';
+import 'package:countries_app/src/widgets/country_tile.dart';
+import 'package:countries_app/src/widgets/custom_button.dart';
+import 'package:countries_app/src/widgets/subtitle.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -15,99 +19,58 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Countries'),
-        ),
-        body: ListView.separated(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          itemCount: 5,
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-              decoration: BoxDecoration(
-                color: Colors.redAccent,
-                borderRadius: BorderRadius.circular(10.0),
+          automaticallyImplyLeading: false,
+          actions: <Widget>[
+            IconButton(
+              icon: const FaIcon(
+                FontAwesomeIcons.solidPlusSquare,
+                color: Colors.greenAccent,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Image.network(
-                        'https://flagcdn.com/w320/sm.png',
-                        height: 50,
-                        width: 50,
-                      ),
-                      const Text('Republic of San Marino'),
-                      Image.network(
-                        'https://mainfacts.com/media/images/coats_of_arms/sm.png',
-                        height: 50,
-                        width: 50,
-                      ),
-                    ],
-                  ).paddingOnly(bottom: 10.0),
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        height: 30,
-                        width: 30,
-                        child: const FittedBox(
-                          fit: BoxFit.contain,
-                          child: FaIcon(
-                            FontAwesomeIcons.globeAsia,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      const Text('Region: Europe').paddingOnly(left: 4.0),
-                    ],
-                  ).paddingOnly(bottom: 10.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Container(
-                            height: 30.0,
-                            width: 30.0,
-                            child: const FittedBox(
-                              fit: BoxFit.contain,
-                              child: FaIcon(
-                                FontAwesomeIcons.mapMarkerAlt,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          const Text('Coordinates:').paddingOnly(left: 4.0),
-                        ],
-                      ),
-                      const Text('lat: 231.21'),
-                      const Text('long: 123.12'),
-                    ],
-                  ).paddingOnly(bottom: 10.0),
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        height: 30.0,
-                        width: 30.0,
-                        child: const FittedBox(
-                          fit: BoxFit.contain,
-                          child: FaIcon(
-                            FontAwesomeIcons.solidMoneyBillAlt,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      const Text('Currency: EUR').paddingOnly(left: 4.0),
-                    ],
-                  ),
-                ],
-              ).paddingAll(16.0),
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return const SizedBox(height: 10.0);
-          },
+              onPressed: () => Get.toNamed<dynamic>(AppRoutes.add),
+            ),
+          ],
         ),
+        body: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+                      hintText: 'Region',
+                      filled: true,
+                      fillColor: Colors.greenAccent,
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(66.0)),
+                      // errorText: logic.validateForm(state.regionController.text),
+                    ),
+                    controller: state.regionController,
+                  ),
+                ),
+                CustomButton(
+                  'Download',
+                  onTap: () => logic.onDownloadPressed(state.regionController.text),
+                ).paddingOnly(left: 12.0),
+              ],
+            ).paddingOnly(top: 12.0),
+            const Subtitle('Countries').paddingSymmetric(vertical: 12.0),
+            Expanded(
+              child: Obx(() {
+                return ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: state.countries.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return CountryTile(state.countries[index]);
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(height: 10.0);
+                  },
+                );
+              }),
+            ),
+          ],
+        ).paddingSymmetric(horizontal: 16.0),
       ),
     );
   }
