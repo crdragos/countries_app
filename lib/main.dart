@@ -1,5 +1,6 @@
 import 'package:countries_app/src/helpers/app_routes.dart';
 import 'package:countries_app/src/pages/add_country/view.dart';
+import 'package:countries_app/src/pages/added_countries/view.dart';
 import 'package:countries_app/src/pages/home/view.dart';
 import 'package:countries_app/src/services/cached_countries_service.dart';
 import 'package:countries_app/src/services/countries_service.dart';
@@ -28,6 +29,7 @@ class CountriesApp extends StatelessWidget {
       getPages: <GetPage<String>>[
         GetPage<String>(name: AppRoutes.home, page: () => HomePage()),
         GetPage<String>(name: AppRoutes.add, page: () => AddCountryPage()),
+        GetPage<String>(name: AppRoutes.added, page: () => AddedCountriesPage()),
       ],
     );
   }

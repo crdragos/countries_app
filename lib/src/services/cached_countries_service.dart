@@ -5,4 +5,6 @@ class CachedCountriesService {
   static CachedCountriesService get to => Get.find<CachedCountriesService>();
 
   final Map<String, List<Country>> countries = <String, List<Country>>{};
+
+  final List<Country> addedCountries = <Country>[];
 }

@@ -1,3 +1,4 @@
+import 'package:countries_app/src/helpers/app_colors.dart';
 import 'package:countries_app/src/models/country.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,7 +13,7 @@ class CountryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFB764CE),
+        color: AppColors.elementsBackground,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Column(
@@ -21,17 +22,25 @@ class CountryTile extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Image.network(
-                country.flagImageUrl ?? '',
-                // country.flagImageUrl,
-                height: 50,
-                width: 50,
-              ),
+              if (country.flagImageUrl != null)
+                Image.network(
+                  country.flagImageUrl ?? '',
+                  // country.flagImageUrl,
+                  height: 50,
+                  width: 50,
+                )
+              else
+                const FaIcon(
+                  FontAwesomeIcons.flag,
+                  size: 35,
+                  color: AppColors.orange,
+                ),
               Text(
                 country.name.length > 20 ? '${country.name.substring(0, 15)}...' : country.name,
                 style: const TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
               if (country.coatOfArmsImageUrl != null)
@@ -43,9 +52,9 @@ class CountryTile extends StatelessWidget {
                 )
               else
                 const FaIcon(
-                  FontAwesomeIcons.timesCircle,
+                  FontAwesomeIcons.globe,
                   size: 35,
-                  color: Colors.redAccent,
+                  color: AppColors.orange,
                 ),
             ],
           ).paddingOnly(bottom: 20.0),
@@ -75,6 +84,7 @@ class CountryTile extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.w600,
+                  color: Colors.white,
                 ),
               ).paddingOnly(left: 8.0),
             ],
@@ -88,7 +98,7 @@ class CountryTile extends StatelessWidget {
                   fit: BoxFit.contain,
                   child: FaIcon(
                     FontAwesomeIcons.mapMarkerAlt,
-                    color: Colors.deepOrangeAccent,
+                    color: AppColors.orange,
                   ),
                 ),
               ),
@@ -97,6 +107,7 @@ class CountryTile extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.w600,
+                  color: Colors.white,
                 ),
               ).paddingOnly(left: 8.0),
             ],
@@ -119,6 +130,7 @@ class CountryTile extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.w600,
+                  color: Colors.white,
                 ),
               ).paddingOnly(left: 8.0),
             ],

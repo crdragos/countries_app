@@ -3,4 +3,5 @@
 class AppRoutes {
   static const String home = '/countries';
   static const String add = '/countries/add';
+  static const String added = '/countries/added';
 }
